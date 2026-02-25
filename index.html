@@ -6,6 +6,7 @@
     <title>traffiq</title>
     
     <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="description" content="Unlock secret daily deals from Vienna's best independent shops, triggered automatically as you walk by.">
 
     <style>
         :root {
@@ -30,7 +31,7 @@
             position: relative;
         }
 
-        /* Subtle Film Grain Texture Overlay */
+        /* Film Grain Texture */
         body::before {
             content: "";
             position: fixed;
@@ -41,7 +42,6 @@
             z-index: 9999;
         }
 
-        /* MAXIMALIST TYPOGRAPHY */
         h1, h2, h3 {
             margin: 0;
             text-transform: uppercase;
@@ -50,82 +50,54 @@
         }
 
         /* -----------------------------------
-           THE COMPARTMENTALIZED HEADER 
+           1. SHRUNK TOP BAR 
            ----------------------------------- */
         .top-bar {
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 2fr 1fr; 
-            font-size: 0.85rem;
+            font-size: 0.7rem; 
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            border-bottom: 3px solid var(--text-dark);
+            border-bottom: 2px solid var(--text-dark);
             background-color: var(--brand-pink);
             color: var(--text-dark);
             position: relative;
             z-index: 100;
-            height: 50px; 
+            height: 35px; 
         }
 
-        .top-bar-cell {
-            padding: 0 2rem;
-            display: flex;
-            align-items: center;
-            height: 100%;
-        }
-
-        .top-bar-cell:not(:last-child) {
-            border-right: 3px solid var(--text-dark);
-        }
-
-        .top-bar-cell.center {
-            justify-content: center;
-            gap: 3rem;
-        }
-
-        .top-bar-cell.right {
-            justify-content: flex-end;
-        }
-
-        .top-bar-link {
-            text-decoration: none;
-            color: var(--text-dark);
-            cursor: pointer;
-            position: relative;
-        }
-        
+        .top-bar-cell { padding: 0 2rem; display: flex; align-items: center; height: 100%; }
+        .top-bar-cell:not(:last-child) { border-right: 2px solid var(--text-dark); }
+        .top-bar-cell.center { justify-content: center; gap: 3rem; }
+        .top-bar-cell.right { justify-content: flex-end; }
+        .top-bar-link { text-decoration: none; color: var(--text-dark); cursor: pointer; position: relative; }
         .top-bar-link::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: var(--text-dark);
-            transform: scaleX(0);
-            transform-origin: bottom right;
-            transition: transform 0.25s ease-out;
+            content: ''; position: absolute; width: 100%; height: 2px; bottom: -2px; left: 0;
+            background-color: var(--text-dark); transform: scaleX(0); transform-origin: bottom right; transition: transform 0.25s ease-out;
         }
-
-        .top-bar-link:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
+        .top-bar-link:hover::after { transform: scaleX(1); transform-origin: bottom left; }
 
         /* -----------------------------------
-           THE HERO: ULTRA PACKED
+           2. UNOBSCURED HERO 
+           ----------------------------------- */
+        /* -----------------------------------
+           2. UNOBSCURED HERO 
            ----------------------------------- */
         .hero {
             background-color: var(--brand-purple);
             color: var(--brand-pink);
-            height: calc(100vh - 50px); 
-            min-height: 750px; 
+            /* CHANGE: Use min-height instead of fixed height so it can grow if needed */
+            min-height: calc(100vh - 35px); 
             display: flex;
             flex-direction: column;
             justify-content: space-between; 
-            overflow: hidden;
+            /* CHANGE: Allow vertical overflow so buttons aren't clipped */
+            overflow-x: hidden; 
+            overflow-y: visible;
             border-bottom: 6px solid var(--text-dark); 
-            padding: 0 4vw 2rem 4vw; 
+            /* CHANGE: Increased bottom padding to 4rem to give the button shadows room to breathe */
+            padding: 2vh 4vw 4rem 4vw; 
             position: relative;
         }
 
@@ -139,348 +111,178 @@
             z-index: 10;
         }
 
-        .text-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: nowrap; 
-            margin-bottom: -1vw; 
-            width: 100%;
-        }
-
-        .giant-word {
-            font-size: clamp(5rem, 15vw, 15rem); 
-            line-height: 0.7; 
+        .giant-word, .giant-word-massive {
+            line-height: 0.75; 
             margin: 0;
             color: var(--brand-pink);
             white-space: nowrap;
-            letter-spacing: -0.06em; 
+            letter-spacing: -0.05em; 
+            z-index: 10; 
+            position: relative;
+            /* Prevents accidental highlighting on touch screens */
+            -webkit-user-select: none; 
+            user-select: none; 
         }
-
-        .giant-word-massive {
-            font-size: clamp(6rem, 19vw, 22rem); 
-            line-height: 0.7; 
-            margin: 0;
-            color: var(--brand-pink);
-            white-space: nowrap;
-            letter-spacing: -0.06em; 
-            margin-right: -1vw; 
-        }
+        .giant-word { font-size: clamp(5rem, 16vw, 16rem); }
+        .giant-word-massive { font-size: clamp(6rem, 20vw, 22rem); }
 
         .interactive-letter {
-            display: inline-block;
-            pointer-events: auto; 
+            display: inline-block; pointer-events: auto; 
             transition: color 0.2s, -webkit-text-stroke 0.2s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
         .interactive-letter:hover {
-            color: transparent;
-            -webkit-text-stroke: 4px var(--brand-pink);
-            transform: scale(1.1) rotate(-5deg);
-            cursor: crosshair;
+            color: transparent; -webkit-text-stroke: 4px var(--brand-pink);
+            transform: scale(1.1) rotate(-5deg); cursor: crosshair;
         }
 
+        /* Polaroids pushed to the background/sides */
         .floating-shop-card {
+            position: absolute; 
             background-color: var(--brand-pink);
             border: 4px solid var(--text-dark);
             padding: 6px 6px 12px 6px; 
             box-shadow: 8px 8px 0px var(--text-dark);
-            width: clamp(100px, 12vw, 180px); 
-            margin: 0 clamp(0.5rem, 1.5vw, 1.5rem); 
+            width: clamp(120px, 14vw, 200px); 
             transition: transform 0.2s;
             pointer-events: auto; 
+            z-index: 2; 
+            opacity: 0.8; 
         }
-
-        .floating-shop-card:hover {
-            z-index: 20;
-            filter: brightness(1.1);
-        }
-
+        .floating-shop-card:hover { z-index: 20; opacity: 1; filter: brightness(1.1); }
         .floating-shop-card img {
-            width: 100%;
-            height: clamp(80px, 10vw, 140px);
-            object-fit: cover;
-            border: 2px solid var(--text-dark);
-            filter: grayscale(100%) contrast(130%);
-            transition: filter 0.3s;
+            width: 100%; height: clamp(100px, 12vw, 180px); object-fit: cover;
+            border: 2px solid var(--text-dark); filter: grayscale(100%) contrast(130%); transition: filter 0.3s;
         }
-
-        .floating-shop-card:hover img {
-            filter: grayscale(0%);
-        }
-
+        .floating-shop-card:hover img { filter: grayscale(0%); }
         .shop-badge {
-            font-size: clamp(0.6rem, 0.8vw, 0.9rem);
-            text-transform: uppercase;
-            color: var(--text-dark);
-            text-align: center;
-            margin-top: 8px;
-            font-weight: 900;
-            letter-spacing: -0.02em;
+            font-size: clamp(0.6rem, 0.8vw, 0.9rem); text-transform: uppercase;
+            color: var(--text-dark); text-align: center; margin-top: 8px; font-weight: 900;
         }
 
-        #shop-float-1 { transform: rotate(-5deg) translateY(1vw); }
-        #shop-float-2 { transform: rotate(8deg) translateY(-1vw); }
-        #shop-float-3 { transform: rotate(-3deg); }
-
-        .hero-bottom-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            z-index: 10;
-        }
+        #shop-float-1 { top: 10%; left: 5%; transform: rotate(-8deg); }
+        #shop-float-2 { top: 15%; right: 5%; transform: rotate(12deg); }
+        #shop-float-3 { bottom: 30%; left: 10%; transform: rotate(-5deg); }
 
         .obj-q-logo {
-            position: absolute;
-            z-index: 5; 
-            width: clamp(100px, 18vw, 200px);
-            bottom: 3%; 
-            right: 4vw;
-            filter: drop-shadow(15px 15px 0px rgba(0,0,0,0.8));
-            pointer-events: none;
-            opacity: 0.9;
+            position: absolute; z-index: 1; width: clamp(150px, 20vw, 300px);
+            bottom: 5%; right: 2vw; filter: drop-shadow(15px 15px 0px rgba(0,0,0,0.8));
+            pointer-events: none; opacity: 0.4; 
+        }
+
+        /* -----------------------------------
+           3. TANGIBLE VALUE & PRIVACY
+           ----------------------------------- */
+        .hero-bottom-section {
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-end; z-index: 10;
         }
 
         .hero-explainer {
-            font-size: clamp(1rem, 1.3vw, 1.2rem);
-            max-width: 600px;
-            margin: 0 auto 1.5rem auto;
+            font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+            max-width: 650px;
+            margin: 0 auto 1rem auto;
             color: #ffffff; 
             line-height: 1.4;
             font-weight: 500;
-            text-transform: none; 
-            letter-spacing: 0;
             text-align: center;
         }
 
-        .hero-cta-wrapper {
+        .privacy-note {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--brand-pink);
+            opacity: 0.8;
+            margin-bottom: 2rem;
             display: flex;
-            gap: 2rem; 
-            flex-wrap: wrap;
-            justify-content: center;
-            pointer-events: auto; 
+            align-items: center;
+            gap: 10px;
+        }
+        .privacy-note::before, .privacy-note::after {
+            content: ''; display: inline-block; width: 40px; height: 1px; background-color: var(--brand-pink); opacity: 0.5;
+        }
+
+        /* -----------------------------------
+           4. DYNAMIC CTAs
+           ----------------------------------- */
+        .hero-cta-wrapper {
+            display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; pointer-events: auto; width: 100%;
         }
 
         .store-badge {
-            display: flex;
-            align-items: center;
-            background-color: var(--brand-pink);
-            color: var(--text-dark);
-            text-decoration: none;
-            padding: 16px 40px; 
-            border: 5px solid var(--text-dark); 
-            border-radius: 100px; 
-            box-shadow: 8px 8px 0px var(--text-dark); 
-            transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s;
+            display: flex; align-items: center; justify-content: center;
+            background-color: var(--brand-pink); color: var(--text-dark); text-decoration: none;
+            padding: 16px 36px; border: 5px solid var(--text-dark); border-radius: 100px; 
+            box-shadow: 6px 6px 0px var(--text-dark); 
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
+            min-width: 260px;
         }
+        .store-badge:hover { transform: translate(2px, 2px); box-shadow: 4px 4px 0px var(--text-dark); background-color: #fff; opacity: 1 !important;}
+        .store-badge:active { transform: translate(6px, 6px); box-shadow: 0px 0px 0px var(--text-dark); }
+        
+        .store-icon { width: 32px; height: 32px; margin-right: 14px; fill: var(--text-dark); }
+        .store-text { display: flex; flex-direction: column; align-items: flex-start; }
+        .store-text-small { font-size: 0.7rem; line-height: 1; margin-bottom: 2px; text-transform: uppercase; font-weight: 800; }
+        .store-text-large { font-size: 1.4rem; line-height: 1; letter-spacing: -0.5px; }
 
-        .store-badge:hover {
-            transform: translate(4px, 4px);
-            box-shadow: 4px 4px 0px var(--text-dark);
-            background-color: #fff; 
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(255, 190, 255, 0.6), 6px 6px 0px var(--text-dark); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 190, 255, 0), 6px 6px 0px var(--text-dark); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 190, 255, 0), 6px 6px 0px var(--text-dark); }
         }
-
-        .store-badge:active {
-            transform: translate(8px, 8px);
-            box-shadow: 0px 0px 0px var(--text-dark);
+        .primary-cta {
+            background-color: #ffffff;
+            animation: pulse-glow 2s infinite;
+            transform: scale(1.05);
         }
-
-        .store-icon {
-            width: 32px; 
-            height: 32px;
-            margin-right: 14px;
-            fill: var(--text-dark);
-        }
-
-        .store-text {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .store-text-small {
-            font-size: 0.75rem;
-            line-height: 1;
-            margin-bottom: 2px;
-            text-transform: uppercase;
-            font-weight: 800;
-        }
-
-        .store-text-large {
-            font-size: 1.5rem; 
-            line-height: 1;
-            letter-spacing: -1px;
+        .secondary-cta {
+            opacity: 0.5;
         }
 
         /* -----------------------------------
-           BLACK MARQUEE
+           5. LIVE FOMO MARQUEE
            ----------------------------------- */
         .marquee-wrapper {
-            background-color: var(--text-dark);
-            color: var(--brand-pink);
-            padding: 1.5rem 0;
-            overflow: hidden;
-            border-bottom: 6px solid var(--text-dark);
-            display: flex;
-            white-space: nowrap;
+            background-color: var(--text-dark); color: var(--brand-pink);
+            padding: 1rem 0; overflow: hidden; border-bottom: 6px solid var(--text-dark); display: flex; white-space: nowrap;
         }
-
         .marquee {
-            font-size: 3.5rem; 
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            animation: scroll-left 12s linear infinite; 
-            display: flex;
-            gap: 2rem;
+            font-size: 2rem; 
+            text-transform: uppercase; letter-spacing: 0; font-weight: 500;
+            animation: scroll-left 25s linear infinite; display: flex; gap: 3rem;
         }
-
-        .marquee span::after {
-            content: "✦";
-            margin-left: 2rem;
-        }
-
-        @keyframes scroll-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+        .marquee span { display: flex; align-items: center; gap: 3rem;}
+        .marquee span::after { content: "●"; font-size: 1rem; color: #fff;}
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* -----------------------------------
-           EDITORIAL CONCEPT SECTION (PINK)
+           EDITORIAL CONCEPT SECTION
            ----------------------------------- */
-        #concept {
-            background-color: var(--brand-pink);
-            color: var(--text-dark);
-            padding: 8rem 4rem;
-            border-bottom: 6px solid var(--text-dark);
-        }
-
-        .editorial-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 4rem;
-        }
-
-        @media (min-width: 1024px) {
-            .editorial-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .editorial-heading {
-            font-size: clamp(3.5rem, 6vw, 6rem);
-            line-height: 0.85;
-            color: var(--brand-purple);
-            margin: 0;
-            letter-spacing: -0.05em;
-        }
-
-        .editorial-text .lead {
-            font-size: clamp(1.5rem, 2.5vw, 2.2rem);
-            line-height: 1.2;
-            margin-bottom: 2.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .editorial-text .columns {
-            column-count: 1;
-            column-gap: 3rem;
-            font-size: 1.2rem;
-            font-weight: 500;
-            line-height: 1.6;
-        }
-
-        @media (min-width: 768px) {
-            .editorial-text .columns {
-                column-count: 2;
-            }
-        }
-
-        .editorial-text p {
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-        }
+        #concept { background-color: var(--brand-pink); color: var(--text-dark); padding: 8rem 4rem; border-bottom: 6px solid var(--text-dark); }
+        .editorial-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 4rem; }
+        @media (min-width: 1024px) { .editorial-grid { grid-template-columns: 1fr 1fr; } }
+        .editorial-heading { font-size: clamp(3.5rem, 6vw, 6rem); line-height: 0.85; color: var(--brand-purple); margin: 0; letter-spacing: -0.05em; }
+        .editorial-text .lead { font-size: clamp(1.5rem, 2.5vw, 2.2rem); line-height: 1.2; margin-bottom: 2.5rem; letter-spacing: -0.02em; }
+        .editorial-text .columns { column-count: 1; column-gap: 3rem; font-size: 1.2rem; font-weight: 500; line-height: 1.6; }
+        @media (min-width: 768px) { .editorial-text .columns { column-count: 2; } }
+        .editorial-text p { margin-top: 0; margin-bottom: 1.5rem; }
 
         /* -----------------------------------
-           BLACK MEGA FOOTER
+           FOOTER
            ----------------------------------- */
-        footer {
-            padding: 6rem 4rem 4rem 4rem;
-            background-color: var(--text-dark);
-            color: var(--brand-pink);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .footer-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            font-size: 1.2rem;
-        }
-
-        .footer-logo {
-            font-size: clamp(5rem, 19vw, 25rem); 
-            line-height: 0.75;
-            letter-spacing: -0.05em;
-            margin: 0;
-            text-align: center;
-            width: 100%;
-            border-top: 4px solid var(--brand-pink);
-            padding-top: 2rem;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 3rem;
-        }
-
-        footer a {
-            color: var(--brand-pink);
-            text-decoration: none;
-            position: relative;
-        }
-        
-        footer a::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: var(--brand-pink);
-            transform: scaleX(0);
-            transform-origin: bottom right;
-            transition: transform 0.25s ease-out;
-        }
-
-        footer a:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
+        footer { padding: 6rem 4rem 4rem 4rem; background-color: var(--text-dark); color: var(--brand-pink); display: flex; flex-direction: column; }
+        .footer-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; text-transform: uppercase; font-size: 1.2rem; }
+        .footer-logo { font-size: clamp(5rem, 19vw, 25rem); line-height: 0.75; letter-spacing: -0.05em; margin: 0; text-align: center; width: 100%; border-top: 4px solid var(--brand-pink); padding-top: 2rem; }
+        .footer-links { display: flex; gap: 3rem; }
+        footer a { color: var(--brand-pink); text-decoration: none; position: relative; }
+        footer a::after { content: ''; position: absolute; width: 100%; height: 2px; bottom: -2px; left: 0; background-color: var(--brand-pink); transform: scaleX(0); transform-origin: bottom right; transition: transform 0.25s ease-out; }
+        footer a:hover::after { transform: scaleX(1); transform-origin: bottom left; }
 
         /* -----------------------------------
-           MOBILE OPTIMIZATION PATCH
+           MOBILE OPTIMIZATION 
            ----------------------------------- */
         @media (hover: none) and (pointer: coarse) {
-            .interactive-letter:hover {
-                color: var(--brand-pink);
-                -webkit-text-stroke: 0;
-                transform: none;
-            }
-            .store-badge:hover {
-                transform: none;
-                box-shadow: 8px 8px 0px var(--text-dark);
-                background-color: var(--brand-pink);
-            }
-            .store-badge:active {
-                transform: translate(4px, 4px);
-                box-shadow: 4px 4px 0px var(--text-dark);
-            }
+            .interactive-letter:hover { color: var(--brand-pink); -webkit-text-stroke: 0; transform: none; }
+            .primary-cta { animation: none; transform: none; background-color: #fff;}
         }
 
         @media (max-width: 768px) {
@@ -489,67 +291,30 @@
             .top-bar-cell.center { display: none; }
 
             .hero { 
-                height: auto; 
-                min-height: calc(100vh - 50px);
-                padding: 1.5rem 1rem 2rem 1rem;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                gap: 1.5rem; 
+                height: auto; min-height: calc(100vh - 35px);
+                padding: 2rem 1rem 2rem 1rem; gap: 2rem;
             }
             
-            .hero-top-section {
-                display: block; 
-                position: relative;
-                width: 100%;
-                text-align: center;
-                flex: none;
-            }
-
-            .text-row { 
-                display: block; 
-                margin-bottom: 0; 
-            }
-            
-            /* FIXED MOBILE TEXT GAP */
+            .hero-top-section { display: block; width: 100%; text-align: center; flex: none; }
             .giant-word, .giant-word-massive { 
-                display: block;
-                font-size: clamp(4.5rem, 21vw, 8rem); 
-                line-height: 0.85; /* Relaxed the line-height for breathing room */
-                margin-bottom: 0.2rem; /* Added a small, clean gap instead of a negative margin */
-                margin-right: 0; /* Reset margins */
-                white-space: nowrap;
+                display: block; font-size: clamp(5rem, 24vw, 9rem); line-height: 0.8; white-space: nowrap; margin-right: 0;
             } 
             
-            .floating-shop-card { 
-                position: absolute; 
-                width: clamp(75px, 22vw, 110px); 
-                margin: 0; 
-                z-index: 20;
-            }
+            .floating-shop-card { display: none !important; }
             
-            #shop-float-1 { top: 0%; right: 2%; transform: rotate(8deg); }
-            #shop-float-3 { bottom: 10%; left: 2%; transform: rotate(-6deg); }
-            #shop-float-2 { display: none !important; } 
+            .hero-bottom-section { flex: none; gap: 1rem;}
+            .hero-explainer { font-size: 1.1rem; margin: 0 auto 0 auto; padding: 0 0.5rem; }
+            .privacy-note { font-size: 0.65rem; margin-bottom: 1.5rem; text-align: center; }
+            .privacy-note::before, .privacy-note::after { display: none; } 
             
-            .hero-bottom-section {
-                flex: none;
-            }
+            .obj-q-logo { width: 100px; bottom: auto; top: 15%; right: -5%; opacity: 0.15; z-index: 1; }
 
-            .hero-explainer { font-size: 1.05rem; margin: 0 auto 1.5rem auto; padding: 0 0.5rem; max-width: 100%; }
+            .hero-cta-wrapper { flex-direction: column; width: 100%; max-width: 350px; gap: 1rem; padding: 0 1rem; }
+            .store-badge { width: 100%; padding: 16px 20px; }
+            .primary-cta { transform: scale(1.02); } 
             
-            .obj-q-logo { width: 90px; bottom: auto; top: 15%; right: -5%; opacity: 0.15; z-index: 1; }
-
-            .hero-cta-wrapper {
-                flex-direction: column;
-                width: 100%;
-                max-width: 350px;
-                gap: 0.8rem;
-                padding: 0 1rem;
-            }
-            .store-badge { width: 100%; justify-content: center; padding: 14px 20px; }
-            .store-text-large { font-size: 1.3rem; }
-            .store-icon { width: 26px; height: 26px; margin-right: 12px;}
+            /* Slow down marquee for smaller screens so it's legible */
+            .marquee { animation-duration: 40s; }
 
             #concept { padding: 4rem 1.5rem; }
             .editorial-heading { font-size: 3rem; margin-bottom: 2rem; }
@@ -579,47 +344,41 @@
 
     <header class="hero" id="hero-section">
         
-        <img src="rotatingLogo.png" alt="Q" class="obj-q-logo parallax-item" id="rotatingLogo" data-speed="4">
+        <img src="rotatingLogo.png" alt="" aria-hidden="true" class="obj-q-logo parallax-item" id="rotatingLogo" data-speed="4">
+
+        <div class="floating-shop-card parallax-item" id="shop-float-1" data-speed="-2">
+            <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=300&q=80&fm=webp" alt="Cafe Korb Interior" loading="lazy">
+            <div class="shop-badge">Café Korb</div>
+        </div>
+        <div class="floating-shop-card parallax-item" id="shop-float-2" data-speed="3">
+            <img src="https://images.unsplash.com/photo-1555529771-835f59fc5efe?auto=format&fit=crop&w=300&q=80&fm=webp" alt="Vintagerie Shop" loading="lazy">
+            <div class="shop-badge">Vintagerie</div>
+        </div>
+        <div class="floating-shop-card parallax-item" id="shop-float-3" data-speed="-1">
+            <img src="https://images.unsplash.com/photo-1511556820780-d912e42b4980?auto=format&fit=crop&w=300&q=80&fm=webp" alt="Alt & Neu Records" loading="lazy">
+            <div class="shop-badge">Alt & Neu</div>
+        </div>
 
         <div class="hero-top-section">
-            <div class="text-row">
-                <div class="giant-word make-interactive">FIND</div>
-                
-                <div class="floating-shop-card parallax-item" id="shop-float-1" data-speed="-2">
-                    <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=300&q=80" alt="Cafe">
-                    <div class="shop-badge">Café Korb</div>
-                </div>
-                
-                <div class="giant-word make-interactive">THE</div>
-                
-                <div class="floating-shop-card parallax-item" id="shop-float-2" data-speed="3">
-                    <img src="https://images.unsplash.com/photo-1555529771-835f59fc5efe?auto=format&fit=crop&w=300&q=80" alt="Vintage">
-                    <div class="shop-badge">Vintagerie</div>
-                </div>
-            </div>
-
-            <div class="text-row">
-                <div class="giant-word-massive make-interactive">HIDDEN</div>
-                
-                <div class="floating-shop-card parallax-item" id="shop-float-3" data-speed="-1">
-                    <img src="https://images.unsplash.com/photo-1511556820780-d912e42b4980?auto=format&fit=crop&w=300&q=80" alt="Records">
-                    <div class="shop-badge">Alt & Neu</div>
-                </div>
-            </div>
+            <div class="giant-word make-interactive">FIND</div>
+            <div class="giant-word make-interactive">THE</div>
+            <div class="giant-word-massive make-interactive">HIDDEN</div>
         </div>
 
         <div class="hero-bottom-section">
-            <p class="hero-explainer">Unlock secret daily deals from Vienna's best independent shops, triggered automatically as you walk by.</p>
+            <p class="hero-explainer">Get a €2 Espresso at Café Korb or 20% off at Alt & Neu—just by walking past.</p>
+            
+            <div class="privacy-note">Zero-search discovery. Low-energy Bluetooth. Your privacy stays yours.</div>
             
             <div class="hero-cta-wrapper parallax-item" data-speed="1">
-                <a href="#" class="store-badge">
+                <a href="#" class="store-badge" id="btn-ios" aria-label="Download Traffiq on the Apple App Store">
                     <svg class="store-icon" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 24 184.8 8 273.5q-9 52.8 24.4 133.5c16.6 40.3 35.6 81.9 71.5 81.9 33.3 0 46-21.7 88.5-21.7 42.5 0 53.8 21.7 89.4 21.7 38.3 0 55.3-40.3 70.8-79.9 19.4-48.4 28-85.3 28.5-87.1-54.6-25.9-61.9-89.8-62.4-93.2zM243.7 87.5c23.6-28.8 28.1-59.5 25.5-87.5-26.5 1.4-56 16.5-73.4 36.6-14.8 17.5-25.7 45.4-21.7 72 29.5 2.1 53.6-11.8 69.6-21.1z"/></svg>
                     <div class="store-text">
                         <span class="store-text-small">Download on the</span>
                         <span class="store-text-large">App Store</span>
                     </div>
                 </a>
-                <a href="#" class="store-badge">
+                <a href="#" class="store-badge" id="btn-android" aria-label="Get Traffiq on Google Play">
                     <svg class="store-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
                     <div class="store-text">
                         <span class="store-text-small">GET IT ON</span>
@@ -633,14 +392,14 @@
 
     <div class="marquee-wrapper">
         <div class="marquee">
-            <span>Discover Hidden Gems</span>
-            <span>Real-Time Local Deals</span>
-            <span>Support Small Business</span>
-            <span>Get The App</span>
-            <span>Discover Hidden Gems</span>
-            <span>Real-Time Local Deals</span>
-            <span>Support Small Business</span>
-            <span>Get The App</span>
+            <span>32 locals just unlocked a deal in the 7th District</span>
+            <span>New gem added: Vintagerie</span>
+            <span>14 active deals near Neubaugasse</span>
+            <span>Just claimed: €2 Espresso at Café Korb</span>
+            <span>32 locals just unlocked a deal in the 7th District</span>
+            <span>New gem added: Vintagerie</span>
+            <span>14 active deals near Neubaugasse</span>
+            <span>Just claimed: €2 Espresso at Café Korb</span>
         </div>
     </div>
 
@@ -670,41 +429,49 @@
     </footer>
 
     <script>
-        document.querySelectorAll('.make-interactive').forEach(el => {
-            const childNodes = Array.from(el.childNodes);
-            el.innerHTML = ''; 
+        // 1. SMART CTA OS DETECTION
+        document.addEventListener("DOMContentLoaded", () => {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const iosBtn = document.getElementById('btn-ios');
+            const androidBtn = document.getElementById('btn-android');
 
-            childNodes.forEach(node => {
-                if (node.nodeType === Node.TEXT_NODE) {
-                    const text = node.textContent;
-                    for (let char of text) {
-                        if (char.trim() === '' && char !== '\u00A0') continue; 
-                        const span = document.createElement('span');
-                        span.innerText = char === ' ' ? '\u00A0' : char; 
-                        span.className = 'interactive-letter';
-                        el.appendChild(span);
-                    }
-                } else {
-                    el.appendChild(node); 
-                }
-            });
+            if (/android/i.test(userAgent)) {
+                androidBtn.classList.add('primary-cta');
+                iosBtn.classList.add('secondary-cta');
+            } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                iosBtn.classList.add('primary-cta');
+                androidBtn.classList.add('secondary-cta');
+            }
         });
 
+        // 2. TEXT HOVER EFFECT
+        document.querySelectorAll('.make-interactive').forEach(el => {
+            const text = el.innerText;
+            el.innerHTML = ''; 
+            for (let char of text) {
+                if (char.trim() === '' && char !== '\u00A0') continue; 
+                const span = document.createElement('span');
+                span.innerText = char === ' ' ? '\u00A0' : char; 
+                span.className = 'interactive-letter';
+                el.appendChild(span);
+            }
+        });
+
+        // 3. PARALLAX
         document.addEventListener("mousemove", parallax);
         function parallax(e) {
             document.querySelectorAll(".parallax-item").forEach(function(move) {
                 var moving_value = move.getAttribute("data-speed");
                 var x = (e.clientX * moving_value) / 250;
                 var y = (e.clientY * moving_value) / 250;
-
                 move.style.transform = "translateX(" + x + "px) translateY(" + y + "px)";
             });
         }
 
+        // 4. ROTATING Q SCROLL
         window.addEventListener('scroll', function() {
             let scrollPos = window.scrollY;
             let rotatingElement = document.getElementById('rotatingLogo');
-            
             if (rotatingElement) {
                 let currentTransform = rotatingElement.style.transform;
                 let translateMatch = currentTransform.match(/translate[XY]\(.*?\)/g);
