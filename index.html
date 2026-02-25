@@ -492,7 +492,6 @@
                 height: auto; 
                 min-height: calc(100vh - 50px);
                 padding: 1.5rem 1rem 2rem 1rem;
-                /* Pack everything tightly into the vertical center */
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -500,7 +499,6 @@
             }
             
             .hero-top-section {
-                /* Pull text block out of flex to stop line-height stretching */
                 display: block; 
                 position: relative;
                 width: 100%;
@@ -509,19 +507,20 @@
             }
 
             .text-row { 
-                display: block; /* Stacks text normally */
+                display: block; 
                 margin-bottom: 0; 
             }
             
+            /* FIXED MOBILE TEXT GAP */
             .giant-word, .giant-word-massive { 
                 display: block;
                 font-size: clamp(4.5rem, 21vw, 8rem); 
-                line-height: 0.8; 
-                margin-bottom: -0.5rem; /* Collapses the gap entirely */
+                line-height: 0.85; /* Relaxed the line-height for breathing room */
+                margin-bottom: 0.2rem; /* Added a small, clean gap instead of a negative margin */
+                margin-right: 0; /* Reset margins */
                 white-space: nowrap;
             } 
             
-            /* Make polaroids absolute so they hover OVER the text instead of pushing it down */
             .floating-shop-card { 
                 position: absolute; 
                 width: clamp(75px, 22vw, 110px); 
@@ -529,10 +528,8 @@
                 z-index: 20;
             }
             
-            /* Pin the polaroids around the text */
             #shop-float-1 { top: 0%; right: 2%; transform: rotate(8deg); }
             #shop-float-3 { bottom: 10%; left: 2%; transform: rotate(-6deg); }
-            /* Hide the second image to clear up space as requested */
             #shop-float-2 { display: none !important; } 
             
             .hero-bottom-section {
@@ -541,7 +538,6 @@
 
             .hero-explainer { font-size: 1.05rem; margin: 0 auto 1.5rem auto; padding: 0 0.5rem; max-width: 100%; }
             
-            /* Push the rotating Q behind the text so it doesn't block buttons */
             .obj-q-logo { width: 90px; bottom: auto; top: 15%; right: -5%; opacity: 0.15; z-index: 1; }
 
             .hero-cta-wrapper {
