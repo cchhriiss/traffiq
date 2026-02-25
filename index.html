@@ -490,30 +490,70 @@
 
             .hero { 
                 height: auto; 
-                min-height: 100vh;
-                padding: 1rem 1rem 3rem 1rem;
+                min-height: calc(100vh - 50px);
+                padding: 1.5rem 1rem 2rem 1rem;
+                /* Pack everything tightly into the vertical center */
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 1.5rem; 
             }
             
-            .text-row { flex-wrap: wrap; gap: 0.5rem; align-content: center; margin-bottom: -0.5rem; }
-            .giant-word { font-size: clamp(3.5rem, 18vw, 6rem); } 
-            .giant-word-massive { font-size: clamp(4.5rem, 22vw, 7rem); margin-right: 0;} 
+            .hero-top-section {
+                /* Pull text block out of flex to stop line-height stretching */
+                display: block; 
+                position: relative;
+                width: 100%;
+                text-align: center;
+                flex: none;
+            }
+
+            .text-row { 
+                display: block; /* Stacks text normally */
+                margin-bottom: 0; 
+            }
             
-            .floating-shop-card { width: clamp(70px, 22vw, 110px); margin: 0.2rem; }
+            .giant-word, .giant-word-massive { 
+                display: block;
+                font-size: clamp(4.5rem, 21vw, 8rem); 
+                line-height: 0.8; 
+                margin-bottom: -0.5rem; /* Collapses the gap entirely */
+                white-space: nowrap;
+            } 
             
-            /* HIDE VINTAGERIE ON MOBILE TO PREVENT THE TEXT GAP */
-            #shop-float-2 { display: none !important; }
+            /* Make polaroids absolute so they hover OVER the text instead of pushing it down */
+            .floating-shop-card { 
+                position: absolute; 
+                width: clamp(75px, 22vw, 110px); 
+                margin: 0; 
+                z-index: 20;
+            }
             
-            .hero-explainer { font-size: 1.1rem; margin: 2rem auto; padding: 0 1rem; }
-            .obj-q-logo { width: 80px; bottom: 8%; right: 2%; opacity: 0.3; }
+            /* Pin the polaroids around the text */
+            #shop-float-1 { top: 0%; right: 2%; transform: rotate(8deg); }
+            #shop-float-3 { bottom: 10%; left: 2%; transform: rotate(-6deg); }
+            /* Hide the second image to clear up space as requested */
+            #shop-float-2 { display: none !important; } 
+            
+            .hero-bottom-section {
+                flex: none;
+            }
+
+            .hero-explainer { font-size: 1.05rem; margin: 0 auto 1.5rem auto; padding: 0 0.5rem; max-width: 100%; }
+            
+            /* Push the rotating Q behind the text so it doesn't block buttons */
+            .obj-q-logo { width: 90px; bottom: auto; top: 15%; right: -5%; opacity: 0.15; z-index: 1; }
 
             .hero-cta-wrapper {
                 flex-direction: column;
                 width: 100%;
                 max-width: 350px;
-                gap: 1rem;
+                gap: 0.8rem;
                 padding: 0 1rem;
             }
             .store-badge { width: 100%; justify-content: center; padding: 14px 20px; }
+            .store-text-large { font-size: 1.3rem; }
+            .store-icon { width: 26px; height: 26px; margin-right: 12px;}
 
             #concept { padding: 4rem 1.5rem; }
             .editorial-heading { font-size: 3rem; margin-bottom: 2rem; }
