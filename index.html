@@ -491,49 +491,29 @@
             .hero { 
                 height: auto; 
                 min-height: 100vh;
-                /* Tighter padding to maximize screen real estate */
-                padding: 1rem 1rem 1.5rem 1rem;
+                padding: 1rem 1rem 3rem 1rem;
             }
             
-            .text-row { 
-                flex-wrap: wrap; 
-                gap: 0.5rem; 
-                /* THIS KILLS THE MASSIVE VERTICAL GAP ON MOBILE */
-                align-content: center; 
-                margin-bottom: -0.5rem; 
-            }
+            .text-row { flex-wrap: wrap; gap: 0.5rem; align-content: center; margin-bottom: -0.5rem; }
+            .giant-word { font-size: clamp(3.5rem, 18vw, 6rem); } 
+            .giant-word-massive { font-size: clamp(4.5rem, 22vw, 7rem); margin-right: 0;} 
             
-            .giant-word { font-size: clamp(3.5rem, 16vw, 6rem); } 
-            .giant-word-massive { font-size: clamp(4rem, 20vw, 7rem); margin-right: 0;} 
+            .floating-shop-card { width: clamp(70px, 22vw, 110px); margin: 0.2rem; }
             
-            /* Slightly scaled down polaroids to fit tighter with text */
-            .floating-shop-card { 
-                width: clamp(70px, 18vw, 100px); 
-                margin: 0.2rem; 
-                padding: 4px;
-            }
-            .floating-shop-card img { height: clamp(50px, 12vw, 80px); }
-            .shop-badge { font-size: 0.55rem; margin-top: 4px; }
+            /* HIDE VINTAGERIE ON MOBILE TO PREVENT THE TEXT GAP */
+            #shop-float-2 { display: none !important; }
             
-            .hero-explainer { 
-                font-size: 1rem; 
-                margin: 1rem auto; 
-                padding: 0 0.5rem; 
-            }
-            
-            .obj-q-logo { width: 80px; bottom: 8%; right: 2%; opacity: 0.2; }
+            .hero-explainer { font-size: 1.1rem; margin: 2rem auto; padding: 0 1rem; }
+            .obj-q-logo { width: 80px; bottom: 8%; right: 2%; opacity: 0.3; }
 
             .hero-cta-wrapper {
                 flex-direction: column;
                 width: 100%;
                 max-width: 350px;
-                gap: 0.8rem;
+                gap: 1rem;
                 padding: 0 1rem;
             }
-            /* Made buttons slightly thinner to guarantee they fit above the fold */
-            .store-badge { width: 100%; justify-content: center; padding: 12px 24px; }
-            .store-text-large { font-size: 1.3rem; }
-            .store-icon { width: 28px; height: 28px; margin-right: 12px;}
+            .store-badge { width: 100%; justify-content: center; padding: 14px 20px; }
 
             #concept { padding: 4rem 1.5rem; }
             .editorial-heading { font-size: 3rem; margin-bottom: 2rem; }
